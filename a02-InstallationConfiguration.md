@@ -444,7 +444,8 @@ $ make
 
 ## Lab 3.1 - Install Kubernetes
 
-1. Login to the first node
+[1]
+Login to the first node
 
 ```
 ssh -i <private-key> ubuntu@<ip>
@@ -452,7 +453,8 @@ ssh -i <private-key> ubuntu@<ip>
 
 <br/>
 
-2. Become `root` and upgrade the system.
+[2]
+Become `root` and upgrade the system.
 
 ```
 $ sudo -i
@@ -462,7 +464,8 @@ $ sudo -i
 
 <br/>
 
-3. Install Docker
+[3]
+Install Docker
 
 ```
 # apt install -y docker.io 
@@ -470,7 +473,8 @@ $ sudo -i
 
 <br/>
 
-4. Add a new repo for kubernetes.
+[4]
+Add a new repo for kubernetes.
 
 ```
 # cat > /etc/apt/sources.list.d/kubernetes.list << EOF
@@ -480,7 +484,8 @@ EOF
 
 <br/>
 
-5. Add GPG key for the packages.
+[5]
+Add GPG key for the packages.
 
 ```
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
@@ -488,7 +493,8 @@ EOF
 
 <br/>
 
-6. Install the software
+[6]
+Install the software
 
 ```
 # apt update -y && apt install -y kubeadm kubelet kubectl
@@ -502,7 +508,8 @@ You can also hold the version by using:
 
 <br/>
 
-7. Deciding which pod network to use for Container Networking Interface (CNI) should take into account the expecteddemands on the cluster.  There can be only one pod network per cluster, although theCNI-Genieproject is trying tochange this. 
+[7]
+Deciding which pod network to use for Container Networking Interface (CNI) should take into account the expecteddemands on the cluster.  There can be only one pod network per cluster, although theCNI-Genieproject is trying tochange this. 
 
 The network must allow container-to-container, pod-to-pod, pod-to-service, and external-to-service communications. As **Docker** uses host-private networking, using the `docker0` virtual bridge and `veth` interfaces would require being on that host to communicate.
 
@@ -516,7 +523,8 @@ Newer versions of Calico have included RBAC in the main file. Once downloaded lo
 
 <br/>
 
-8. Use `less` to page through the file. Look for the IPV4 pool assigned to the containers. There are many different configuration settings in this file. Take a moment to view the entire file. The `CALICO_IPV4POOL_CIDR` must match the value given to `kubeadm init` in the following step, whatever the value may be. Avoid conflicts with existing IP ranges of the instance.
+[8]
+Use `less` to page through the file. Look for the IPV4 pool assigned to the containers. There are many different configuration settings in this file. Take a moment to view the entire file. The `CALICO_IPV4POOL_CIDR` must match the value given to `kubeadm init` in the following step, whatever the value may be. Avoid conflicts with existing IP ranges of the instance.
 
 ```
 cat calico.yaml | grep CALICO_IPV4POOL -B 1
@@ -524,7 +532,8 @@ cat calico.yaml | grep CALICO_IPV4POOL -B 1
 
 <br/>
 
-9. Find the IP address of the primary interface of the master server. 
+[9]
+Find the IP address of the primary interface of the master server. 
 
 ```
 ip addr
@@ -534,7 +543,8 @@ ip addr
 
 <br/>
 
-10. Add a local DNS alias for our master server. Edit `/etc/hosts` and add the IP address found using `ip addr`
+[10]
+Add a local DNS alias for our master server. Edit `/etc/hosts` and add the IP address found using `ip addr`
 
 ```
 echo "172.31.31.30 k8smaster" >> /etc/hosts
@@ -544,7 +554,8 @@ echo "172.31.31.30 k8smaster" >> /etc/hosts
 
 <br/>
 
-11. Create a configuration file for the cluster. There are many options we could include, but will only set the control plane endpoint, software version to deploy and podSubnet values. After our cluster is initialized we will view other default values used. Be sure to use the node alias, not the IP so the network certificates will continue to work when we deploy a load balancer in a future lab.
+[11]
+Create a configuration file for the cluster. There are many options we could include, but will only set the control plane endpoint, software version to deploy and podSubnet values. After our cluster is initialized we will view other default values used. Be sure to use the node alias, not the IP so the network certificates will continue to work when we deploy a load balancer in a future lab.
 
 ```
 cat > kubeadm-config.yaml << EOL
@@ -559,11 +570,12 @@ EOL
 
 <br/>
 
-12. Initialize the master. Read through the output line by line. Expect the output to change as the software matures. At the end are configuration directions to run as a non-root user. The token is mentioned as well. This information can be found later with the `kubeadm token list` command. 
+[12]
+Initialize the master. Read through the output line by line. Expect the output to change as the software matures. At the end are configuration directions to run as a non-root user. The token is mentioned as well. This information can be found later with the `kubeadm token list` command. 
 
-  The output also directs you to create a pod network to the cluster, which will be our next step. Pass the network settings Calico has in its configuration file, found in the previous step. 
+The output also directs you to create a pod network to the cluster, which will be our next step. Pass the network settings Calico has in its configuration file, found in the previous step. 
 
-  Please note: the output lists several commands which following exercise steps will complete.
+Please note: the output lists several commands which following exercise steps will complete.
 
 ```
 kubeadm init --config=kubeadm-config.yaml --upload-certs | tee kubeadm-init.out
@@ -591,7 +603,9 @@ kubeadm join k8smaster:6443 --token zxar4b.et4kwksqv2bgue0j \
 
 <br/>
 
-13. As suggested in the directions at the end of the previous output we will allow a non-root user admin level access to the cluster. Take a quick look at the configuration file once it has been copied and the permissions fixed.
+[13]
+
+As suggested in the directions at the end of the previous output we will allow a non-root user admin level access to the cluster. Take a quick look at the configuration file once it has been copied and the permissions fixed.
 
 ```
 # exit
@@ -603,7 +617,9 @@ $ cat .kube/config
 
 <br/>
 
-14. Apply the network plugin configuration to your cluster. Remember to copy the file to the current, non-root user directory first.
+[14]
+
+Apply the network plugin configuration to your cluster. Remember to copy the file to the current, non-root user directory first.
 
 ```
 sudo cp /root/calico.yaml .
@@ -614,7 +630,9 @@ kubectl apply -f calico.yaml
 
 <br/>
 
-15. While many objects have short names, a `kubectl` command can be a lot to type. We will enable bash auto-completion. Begin by adding the settings to the current shell. Then update the `$HOME/.bashrc` file to make it persistent. Ensure the bash-completion package is installed. If it was not installed, log out then back in for the shell completion to work.
+[15]
+
+While many objects have short names, a `kubectl` command can be a lot to type. We will enable bash auto-completion. Begin by adding the settings to the current shell. Then update the `$HOME/.bashrc` file to make it persistent. Ensure the bash-completion package is installed. If it was not installed, log out then back in for the shell completion to work.
 
 ```
 sudo apt install -y bash-completion
@@ -623,14 +641,18 @@ echo "source <(kubectl completion bash)" >> $HOME/.bashrc
 ```
 
 <br/>
-16. Test by describing the node again. 
-  Type the first three letters of the sub-command then type the Tab key. 
-  
-  Auto-completion assumes the default namespace. Pass the namespace first to use auto-completion with a different namespace. By pressing Tab multiple times you will see a list of possible values. 
-  
-  Continue typing until a unique name is used. First look at the current node (your node name may not start with lfs458-), then look at pods in the `kube-system` namespace. 
-  
-  If you see an error instead such as `-bash: _get_comp_words_by_ref:` command not found revisit the previous step, install the software, log out and back in.
+
+[16]
+
+Test by describing the node again. 
+
+Type the first three letters of the sub-command then type the Tab key. 
+
+Auto-completion assumes the default namespace. Pass the namespace first to use auto-completion with a different namespace. By pressing Tab multiple times you will see a list of possible values. 
+
+Continue typing until a unique name is used. First look at the current node (your node name may not start with lfs458-), then look at pods in the `kube-system` namespace. 
+
+If you see an error instead such as `-bash: _get_comp_words_by_ref:` command not found revisit the previous step, install the software, log out and back in.
 
 ```
 kubectl des<Tab> n<Tab><Tab>
@@ -639,7 +661,9 @@ kubectl -n kube-s<Tab> g<Tab> po<Tab>
 
 <br/>
 
-17. View other values we could have included in the `kubeadm-config.yaml` file when creating the cluster.
+[17]
+
+View other values we could have included in the `kubeadm-config.yaml` file when creating the cluster.
 
 ```
 sudo kubeadm config print init-defaults

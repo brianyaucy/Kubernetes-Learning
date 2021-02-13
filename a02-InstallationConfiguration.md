@@ -233,13 +233,13 @@ https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
 <br/>
 
-| Pod Networking | Name | Description |
+| Pod Networking | Description |
 | ---- | --- | --- |
-| ![picture 25](images/afb3f9511cac0a95735c64697ed1e9290d86f564e5f57b601ce813d61fee48f8.png) | Calico | A flat Layer 3 network which communicates without IP encapsulation, used in production with software such as Kubernetes, OpenShift, Docker, Mesos and OpenStack. Viewed as a simple and flexible networking model, it scales well for large environments. Another network option, Canal, also part of this project, allows for integration with Flannel. Allows for implementation of network policies.<br/><br/>Reference:<br/>https://www.projectcalico.org/ |
-| ![picture 26](images/d5b28d2eeeea913da354ead91779a00bc9a27f90d318a06262f6092dc73b4a51.png) | Flannel | A Layer 3 IPv4 network between the nodes of a cluster. Developed by CoreOS, it has a long history with Kubernetes. Focused on traffic between hosts, not how containers configure local networking, it can use one of several backend mechanisms, such as VXLAN. A flanneld agent on each node allocates subnet leases for the host. While it can be configured after deployment, it is much easier prior to any Pods being added.<br/><br/>Reference:<br/>https://github.com/coreos/flannel |
-| ![picture 27](images/e3a8dc677d682137d2b8ad142b2f964b547622b4a8a787c293e4a9b4e485bb89.png) | Kube-Router | Feature-filled single binary which claims to "do it all". The project is in the alpha stage, but promises to offer a distributed load balancer, firewall, and router purposely built for Kubernetes.<br/><br/>Reference:<br/>https://www.kube-router.io/
-| ![picture 28](images/12381626c3656e91368f139c8fc0e445a8142859635ad343ff249b47aae7b8ab.png) | Romana | This is another project aimed at network and security automation for cloud native applications. Aimed at large clusters, IPAM-aware topology and integration with kops clusters.<br/><br/>Reference:<br/>https://github.com/romana/romana |
-| ![picture 29](images/3330d930ba85069f561008c33f878830865e57d69cfdb3f6ac9d50f254620ec5.png) | Weave Net | It is typically used as an add-on for a CNI-enabled Kubernetes cluster.<br/><br/>Reference:<br/>https://www.weave.works/oss/net/ |
+| Calico | A flat Layer 3 network which communicates without IP encapsulation, used in production with software such as Kubernetes, OpenShift, Docker, Mesos and OpenStack. Viewed as a simple and flexible networking model, it scales well for large environments. Another network option, Canal, also part of this project, allows for integration with Flannel. Allows for implementation of network policies.<br/><br/>Reference:<br/>https://www.projectcalico.org/ |
+| Flannel | A Layer 3 IPv4 network between the nodes of a cluster. Developed by CoreOS, it has a long history with Kubernetes. Focused on traffic between hosts, not how containers configure local networking, it can use one of several backend mechanisms, such as VXLAN. A flanneld agent on each node allocates subnet leases for the host. While it can be configured after deployment, it is much easier prior to any Pods being added.<br/><br/>Reference:<br/>https://github.com/coreos/flannel |
+| Kube-Router | Feature-filled single binary which claims to "do it all". The project is in the alpha stage, but promises to offer a distributed load balancer, firewall, and router purposely built for Kubernetes.<br/><br/>Reference:<br/>https://www.kube-router.io/
+| Romana | This is another project aimed at network and security automation for cloud native applications. Aimed at large clusters, IPAM-aware topology and integration with kops clusters.<br/><br/>Reference:<br/>https://github.com/romana/romana |
+| Weave Net | It is typically used as an add-on for a CNI-enabled Kubernetes cluster.<br/><br/>Reference:<br/>https://www.weave.works/oss/net/ |
 
 <br/>
 
@@ -255,12 +255,12 @@ https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
 Examples of installation tools:
 
-| Tool | Name | Description |
+| Tool | Description |
 | --- | --- | --- |
-| ![picture 30](images/dfa58c159676fd5520a9afe5f23ed8a76f330da9afd3de0d741976a34e3652a5.png) | kubespray | `kubespray` is now in the Kubernetes incubator. It is an advanced **Ansible playbook** which allows you to set up a Kubernetes cluster on various operating systems and use different network providers. ​It was once known as kargo.<br/><br/>Reference:<br/>https://github.com/kubernetes-sigs/kubespray |
-| ![picture 31](images/9267af2fd572043cdc4ccbfdd9650809239e89214fb1aa258c35a58f18342d20.png) | kops | kops (Kubernetes Operations) lets you create a Kubernetes cluster on AWS via a single command line. Also in beta for GKE and alpha for VMware.<br/><br/>Reference:<br/>https://github.com/kubernetes/kops |
-| ![picture 32](images/3b5cf2e96557177cf3d61ba2a0fc53d788bf9a940ac7dc69e215c647250b5b47.png){:height="25%" width="25%"} | kube-aws | `kube-aws` is a command line tool that makes use of the AWS Cloud Formation to provision a Kubernetes cluster on AWS.<br/><br/>Reference:<br/>https://kubernetes-incubator.github.io/kube-aws/ |
-| ![picture 33](images/c771e1b06f7034bb5d5f506f3ce507711fd79c518b22045fdd4419f757f3f721.png =250x250) | kubicorn | `kubicorn` is a tool which leverages the use of `kubeadm` to build a cluster. It claims to have no dependency on DNS, runs on several operating systems, and uses snapshots to capture a cluster and move it.<br/><br/>Reference:<br/>http://kubicorn.io/ |
+| kubespray | `kubespray` is now in the Kubernetes incubator. It is an advanced **Ansible playbook** which allows you to set up a Kubernetes cluster on various operating systems and use different network providers. ​It was once known as kargo.<br/><br/>Reference:<br/>https://github.com/kubernetes-sigs/kubespray |
+| kops | kops (Kubernetes Operations) lets you create a Kubernetes cluster on AWS via a single command line. Also in beta for GKE and alpha for VMware.<br/><br/>Reference:<br/>https://github.com/kubernetes/kops |
+| kube-aws | `kube-aws` is a command line tool that makes use of the AWS Cloud Formation to provision a Kubernetes cluster on AWS.<br/><br/>Reference:<br/>https://kubernetes-incubator.github.io/kube-aws/ |
+| kubicorn | `kubicorn` is a tool which leverages the use of `kubeadm` to build a cluster. It claims to have no dependency on DNS, runs on several operating systems, and uses snapshots to capture a cluster and move it.<br/><br/>Reference:<br/>http://kubicorn.io/ |
 
 <br/>
 
@@ -668,3 +668,8 @@ View other values we could have included in the `kubeadm-config.yaml` file when 
 ```
 sudo kubeadm config print init-defaults
 ```
+
+<br/>
+
+---
+

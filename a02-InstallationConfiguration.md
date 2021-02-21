@@ -15,6 +15,7 @@
   - [Using Hyperkube](#using-hyperkube)
   - [Compiling from Source](#compiling-from-source)
   - [Lab 3.1 - Install Kubernetes](#lab-31---install-kubernetes)
+  - [Lab 3.2 - Grow the cluster](#lab-32---grow-the-cluster)
 
 ---
 
@@ -673,3 +674,38 @@ sudo kubeadm config print init-defaults
 
 ---
 
+## Lab 3.2 - Grow the cluster
+
+[1]
+
+Using the same process as before connect to a second node.
+
+```
+ssh -i <private-key> ubuntu@<ip>
+```
+
+```
+# Change the hostname:
+sudo systemctl set-hostname worker
+
+# Become root and perform update
+sudo -i
+apt update -y && apt upgrade -y
+
+# Install docker
+apt install docker.io -y
+
+# Add kubernetes repo
+cat > /etc/apt/sources.list.d/kubernetes.list <<EOL
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+EOL
+
+# Add Kubernetes GPG and install k8s
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+apt update -y && apt install -y kubeadm kubelet kubectl
+apt-mark hold kubelet kubelet kubectl
+```
+
+<br/>
+
+[2]
